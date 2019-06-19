@@ -1,0 +1,77 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet"> -->
+
+</head>
+<body>
+
+<header>
+<nav>
+    <div class="logo">
+        <a href="{% url 'main' %}"><h3>The Logo</h3></a>
+    </div>
+    <ul class="nav-links">
+        <li>
+            <a href="{% url 'about' %}">About</a>
+        </li>
+        <li>
+            <a href="{% url 'blog' %}">Blog</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li>
+            <a href="{% url 'profile' %}">Profile</a>
+        </li>
+         <li>
+            <a href="{% url 'post-new' %}">New Post</a>
+        </li>
+        <li>
+            <a href="{% url 'logout' %}">Log Out</a>
+        </li>
+
+        {% else %}
+        <li>
+            <a href="{% url 'login' %}">Log In</a>
+        </li>
+        <li>
+            <a href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <div class="burger">
+        <div class="link1"></div>
+        <div class="link2"></div>
+        <div class="link3"></div>
+    </div>
+
+
+</nav>
+
+</header>
+<main role="main" class="container">
+    <div class="col-md-8">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+
+
+    {% block body %}
+    {% endblock %}
+</main>
+
+</body>
+</html>
